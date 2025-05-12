@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Ajay",
+    "role": "hr_junior",
+    "full_name": "Ajay Test",
+    "password": "8776f108e247ab1e2b323042c049c266407c81fbad41bde1e8dfc1bb66fd267e",
+    "uuid": "429571df-eea9-43ae-ba58-30df5d1edb70"
+  },
+  {
+    "name": "Sara",
+    "role": "hr_senior",
+    "full_name": "Sara Test",
+    "password": "6f810a1aaa156dac8672d7962587d02b17472138e4a38ed458cb772b06810640",
+    "uuid": "42996b75-8545-4f3e-87e1-27922462fd62"
+  },
+  {
+    "name": "John",
+    "role": "hr_junior",
+    "full_name": "John Test",
+    "password": "38f078b0dbe8cc86c561ac6570894dcc54f751922ca1afe9cb9e1f674fc13a24",
+    "uuid": "7f7912c7-9a0e-43df-b8d4-add2cbcb1526"
+  },
+  {
+    "name": "Lina",
+    "role": "Finance_lead",
+    "full_name": "Lina Test",
+    "password": "d55f4c24a17c7614cfc1d8c20d972d91a465b07057f019927031ae28fc3d8654",
+    "uuid": "aeab81ec-a88f-41ae-b547-d4b60bc62b55"
+  }
+]
