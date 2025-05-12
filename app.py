@@ -156,13 +156,30 @@ class RoleBasedPDFChunker:
             context += f"\nDoc {i+1} ({source}): {d.page_content.strip()}\n"
         return context
 
+# ─────────────────────── Singleton Chunker Init ───────────────── #
+
+chunker = RoleBasedPDFChunker(ROLE_SOURCES)
+chunker.load_and_chunk_pdfs()
+
+print("✅ Loaded all PDFs and split chunks.")
+
+chunker.create_chroma_collections()
+print("✅ Created Chroma collections.")
+
+for role in ROLE_SOURCES:
+    role_dir = os.path.join("chroma_db", role)
+    if os.path.exists(role_dir):
+        print(f"✅ Collection directory created: {role_dir}")
+    else:
+        print(f"❌ Missing collection directory: {role_dir}")
+
 
 # ─────────────────────── API Endpoints ────────────────────────── #
 
 @app.get("/")
 def read_root():
     return {"status":"ok", "message":"Fastapi is live"}
-    
+
 
 @app.post("/login")
 def login(payload: LoginRequest):
@@ -182,21 +199,6 @@ async def ask(payload: AskRequest, user=Depends(validate_uuid)):
         session_memory_store[user_uuid] = ListMemory()
     memory = session_memory_store[user_uuid]
 
-    # ─────────────────────── Singleton Chunker Init ───────────────── #
-    chunker = RoleBasedPDFChunker(ROLE_SOURCES)
-    chunker.load_and_chunk_pdfs()
-
-    print("✅ Loaded all PDFs and split chunks.")
-
-    chunker.create_chroma_collections()
-    print("✅ Created Chroma collections.")
-
-    for role in ROLE_SOURCES:
-        role_dir = os.path.join("chroma_db", role)
-        if os.path.exists(role_dir):
-            print(f"✅ Collection directory created: {role_dir}")
-        else:
-            print(f"❌ Missing collection directory: {role_dir}")
 
     # Context from ChromaDB
     context = chunker.get_context(user_role, query)
