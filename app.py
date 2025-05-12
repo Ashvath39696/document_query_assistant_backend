@@ -15,7 +15,7 @@ from autogen_agentchat.messages import TextMessage
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
 
 from autogen_agentchat.agents import AssistantAgent
 from autogen_ext.models.openai import OpenAIChatCompletionClient
@@ -84,7 +84,7 @@ class RoleBasedPDFChunker:
         self.role_sources = role_sources
         self.persist_directory = persist_directory
         self.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-        self.embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        self.embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY")) 
         self.collections = {}
         self.chroma_collections = {}
         self.force_reload = force_reload
@@ -215,7 +215,7 @@ async def ask(payload: AskRequest, user=Depends(validate_uuid)):
     - Be concise, neutral, and professional.
     - Do not speculate or provide suggestions unless clearly stated in the documents.
     - If the answer cannot be found in the documents, respond:
-    "I'm sorry, I couldn't find that information in the provided documents."
+    "I'm sorry, your role does not have access to such information."
     """
 
     # Assistant with session memory
