@@ -158,6 +158,12 @@ class RoleBasedPDFChunker:
 
 
 # ─────────────────────── API Endpoints ────────────────────────── #
+
+@app.get("/")
+def read_root():
+    return {"status":"ok", "message":"Fastapi is live"}
+    
+
 @app.post("/login")
 def login(payload: LoginRequest):
     for user in users:
